@@ -26,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include "Hardware/LED.h"
 #include "Hardware/Blue.h"
+#include "Hardware/OLED.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -92,13 +93,17 @@ int main(void)
   MX_DMA_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-    Blue_Init();
+  Blue_Init();
+  OLED_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    OLED_ShowString(0, 0, "Hello, World!");
+    OLED_Refresh_Gram();   // 把 GRAM 推送到屏幕，否则只写缓冲、屏一直全黑
+    HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
