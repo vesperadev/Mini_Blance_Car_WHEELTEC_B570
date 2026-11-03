@@ -36,7 +36,11 @@ add_executable(${CMAKE_PROJECT_NAME}
     Core/Src/Hardware/Blue.c
     Core/Src/Hardware/Blue.h
     Core/Src/Hardware/OLED.c
-    Core/Src/Hardware/OLED.h)
+    Core/Src/Hardware/OLED.h
+    Core/Src/Hardware/Motor.c
+    Core/Src/Hardware/Motor.h
+    Core/Src/Algorithm/pid.c
+    Core/Src/Algorithm/pid.h)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
