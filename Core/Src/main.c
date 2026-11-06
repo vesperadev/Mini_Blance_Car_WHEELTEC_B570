@@ -28,6 +28,8 @@
 #include "Hardware/LED.h"
 #include "Hardware/Blue.h"
 #include "Hardware/OLED.h"
+#include "Hardware/Motor.h"
+#include "Algorithm/pid.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,7 +50,9 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+PID_t pid_stand;   // 直立环 (位置式, PD)
+PID_t pid_speed;   // 速度环 (增量式, PI)
+PID_t pid_turn;    // 转向环 (位置式, P 就行)`
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -94,9 +98,13 @@ int main(void)
   MX_DMA_Init();
   MX_USART3_UART_Init();
   MX_TIM1_Init();
+  MX_TIM4_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   Blue_Init();
   OLED_Init();
+  Motor_Init();
+  Motor_SetPWM(0, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */

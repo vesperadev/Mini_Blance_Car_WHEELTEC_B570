@@ -6,5 +6,5 @@
 // 电机方向引脚 (CubeMX 标签, 均在 GPIOB):
 //   AIN1 = PB12, AIN2 = PB13, BIN1 = PB14, BIN2 = PB15
 void Motor_Init(void);
-void Motor_SetPWM(int16_t PWMA, int16_t PWMB);
+void Motor_SetPWM(int16_t PWMB, int16_t PWMA);
 #endif /* __MOTOR_H */

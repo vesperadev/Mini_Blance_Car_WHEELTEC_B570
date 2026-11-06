@@ -75,6 +75,9 @@ void Error_Handler(void);
 #define PWMB_GPIO_Port GPIOA
 #define PWMA_Pin GPIO_PIN_11
 #define PWMA_GPIO_Port GPIOA
+#define MPU6050_INT_Pin GPIO_PIN_12
+#define MPU6050_INT_GPIO_Port GPIOA
+#define MPU6050_INT_EXTI_IRQn EXTI15_10_IRQn
 #define OLED_DC_Pin GPIO_PIN_15
 #define OLED_DC_GPIO_Port GPIOA
 #define OLED_RES_Pin GPIO_PIN_3

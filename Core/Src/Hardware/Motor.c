@@ -1,5 +1,7 @@
-
-
+#include "main.h"
+#include "tim.h"
+#include "stm32f1xx_hal_tim.h"   // HAL_TIM_SetCompare / HAL_TIM_PWM_Start
+#include <stdlib.h>              // abs
 void Motor_Init(void)
 {
     // 初始化电机引脚 -- 由MX已经完成 
@@ -8,8 +10,9 @@ void Motor_Init(void)
     HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 }
 
-void Motor_SetPWM(int16_t PWMA, int16_t PWMB)
+void Motor_SetPWM(int16_t PWMB, int16_t PWMA)
 {
+    PWMA = -PWMA;
     // ---- 电机 A 方向 (AIN1=PB12, AIN2=PB13) ----
     if (PWMA >= 0) {
         HAL_GPIO_WritePin(AIN1_GPIO_Port, AIN1_Pin, GPIO_PIN_SET);
@@ -29,7 +32,7 @@ void Motor_SetPWM(int16_t PWMA, int16_t PWMB)
 
     // ---- 设置 PWM 占空比 (取绝对值, 范围 0 ~ 7199) ----
     // 电机 A PWM -> TIM1_CH4 (PA11)
-    HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, (uint32_t)abs(PWMA));
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, (uint32_t)abs(PWMA));
     // 电机 B PWM -> TIM1_CH1 (PA8)
-    HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, (uint32_t)abs(PWMB));
+    __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, (uint32_t)abs(PWMB));
 }
