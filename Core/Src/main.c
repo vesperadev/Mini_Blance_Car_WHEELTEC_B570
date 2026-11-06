@@ -29,7 +29,9 @@
 #include "Hardware/Blue.h"
 #include "Hardware/OLED.h"
 #include "Hardware/Motor.h"
+#include "Hardware/Encoder.h"
 #include "Algorithm/pid.h"
+#include "Hardware/Encoder.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -99,11 +101,12 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM1_Init();
   MX_TIM4_Init();
-  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   Blue_Init();
   OLED_Init();
   Motor_Init();
+  Encoder_Init();
   Motor_SetPWM(0, 0);
   /* USER CODE END 2 */
 
@@ -111,7 +114,25 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    OLED_Clear();
     OLED_ShowString(0, 0, "Hello, World!");
+    Encoder_Update();
+
+    // 带符号显示 (u32 强转会丢失负号, 这里手动拆符号)
+    if (Encoder_GetCountA < 0) {
+        OLED_ShowChar(1, 10, '-', 12, 1);
+        OLED_ShowNumber(1 + 8, 10, (u32)(-Encoder_GetCountA), 5, 12);
+    } else {
+        OLED_ShowChar(1, 10, ' ', 12, 1);
+        OLED_ShowNumber(1 + 8, 10, (u32)Encoder_GetCountA, 5, 12);
+    }
+    if (Encoder_GetCountB < 0) {
+        OLED_ShowChar(2, 20, '-', 12, 1);
+        OLED_ShowNumber(2 + 8, 20, (u32)(-Encoder_GetCountB), 5, 12);
+    } else {
+        OLED_ShowChar(2, 20, ' ', 12, 1);
+        OLED_ShowNumber(2 + 8, 20, (u32)Encoder_GetCountB, 5, 12);
+    }
     OLED_Refresh_Gram();   // 把 GRAM 推送到屏幕，否则只写缓冲、屏一直全黑
     HAL_Delay(1000);
     /* USER CODE END WHILE */

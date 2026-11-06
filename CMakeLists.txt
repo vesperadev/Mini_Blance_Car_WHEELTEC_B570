@@ -40,7 +40,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     Core/Src/Hardware/Motor.c
     Core/Src/Hardware/Motor.h
     Core/Src/Algorithm/pid.c
-    Core/Src/Algorithm/pid.h)
+    Core/Src/Algorithm/pid.h
+    Core/Src/Hardware/Encoder.c
+    Core/Src/Hardware/Encoder.h)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
