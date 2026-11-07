@@ -22,6 +22,8 @@
 #include "stm32f1xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "Hardware/MPU6050/mpu6050.h"
+extern volatile uint8_t mpu_dmp_ready;   // DMP 数据就绪标志(主循环消费)
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -257,5 +259,13 @@ void EXTI15_10_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if (GPIO_Pin == MPU6050_INT_Pin) {
+        /* 这里只置标志, 真正的 dmp_read_fifo 放到主循环执行:
+           EXTI 优先级(0) 高于 SysTick(15), 中断内 HAL_GetTick() 不再走字,
+           HAL_I2C_Mem_Read 的超时等待会死循环, 官方例程用软件 I2C 故无此问题 */
+        mpu_dmp_ready = 1;
+    }
+}
 /* USER CODE END 1 */

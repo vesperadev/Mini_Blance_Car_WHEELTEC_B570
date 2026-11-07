@@ -90,6 +90,10 @@ void Error_Handler(void);
 #define ENCODER_RB_GPIO_Port GPIOB
 #define ENCODER_RA_Pin GPIO_PIN_7
 #define ENCODER_RA_GPIO_Port GPIOB
+#define MPU6050_SCL_Pin GPIO_PIN_8
+#define MPU6050_SCL_GPIO_Port GPIOB
+#define MPU6050_SDA_Pin GPIO_PIN_9
+#define MPU6050_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

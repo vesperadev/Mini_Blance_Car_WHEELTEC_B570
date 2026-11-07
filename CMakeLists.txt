@@ -42,7 +42,12 @@ add_executable(${CMAKE_PROJECT_NAME}
     Core/Src/Algorithm/pid.c
     Core/Src/Algorithm/pid.h
     Core/Src/Hardware/Encoder.c
-    Core/Src/Hardware/Encoder.h)
+    Core/Src/Hardware/Encoder.h
+    Core/Src/Hardware/MPU6050/MPU6050.c
+    Core/Src/Hardware/MPU6050/inv_mpu.c
+    Core/Src/Hardware/MPU6050/inv_mpu_dmp_motion_driver.c
+    Core/Src/Hardware/MPU6050/ioi2c.c
+    Core/Src/Hardware/MPU6050/delay.c)
 
 # Add STM32CubeMX generated sources
 add_subdirectory(cmake/stm32cubemx)
@@ -59,6 +64,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/Hardware
+    Core/Src/Hardware/MPU6050
 )
 
 # Add project symbols (macros)
